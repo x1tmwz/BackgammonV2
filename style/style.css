@@ -1,0 +1,62 @@
+.dice{
+    height: 10%;
+    width: 7%;
+}
+.throwButton{
+    height: 5%;
+    width: 10%;
+    font-size: 1vw;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.doubleDiceCompnent{
+    left: 0%;
+    top: 30%;
+}
+.Disc{
+    height: 70px;
+    width: 70px;
+}
+.backgammon{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 80%;
+    height: 80%;
+}
+.boardImg{
+    height: 100%;
+    width: 100%;
+
+}
+table{
+    top: 15.5%;
+    height: 68%;
+    width: 30%;
+   
+}
+tr{
+    border: 1px solid black;
+}
+td{
+    border: 1px solid black;
+}
+.table1{
+    position: absolute;
+    left: 52%;
+    z-index: 2;
+    border: 1px solid red;
+}
+.table2{
+    position: absolute;
+    left: 18%;
+    z-index: 2;
+    border: 1px solid blueviolet;
+}
+ul{
+    border: 1px salmon;
+}
