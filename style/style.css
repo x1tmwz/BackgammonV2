@@ -18,8 +18,9 @@
     top: 30%;
 }
 .Disc{
-    height: 70px;
-    width: 70px;
+    height: 10%;
+    width: 60%;
+    
 }
 .backgammon{
     margin-left: auto;
@@ -34,29 +35,81 @@
 
 }
 table{
-    top: 15.5%;
-    height: 68%;
+    height: 33%;
     width: 30%;
-   
 }
 tr{
     border: 1px solid black;
 }
 td{
     border: 1px solid black;
+    width:50px;
+    min-width:10px;
+    padding-left: 4%;
+    
 }
 .table1{
+    top: 16%;
     position: absolute;
     left: 52%;
     z-index: 2;
     border: 1px solid red;
+    
+    
 }
 .table2{
     position: absolute;
+    top:16%;
     left: 18%;
     z-index: 2;
     border: 1px solid blueviolet;
+    
+    
 }
-ul{
-    border: 1px salmon;
+.table3{
+    position: absolute;
+    top:49%;
+    left: 52%;
+    z-index: 2;
+    border: 1px solid green;
+    
 }
+.table4{
+    position: absolute;
+    top: 49%;
+    left: 18%;
+    z-index: 2;
+    border: 1px solid blue;
+    
+}
+.eatenTable{
+    width: 4%;
+    height: 78%;
+    position: absolute;
+    top: 10%;
+    left: 48%;
+    z-index: 2;
+    border: 1px solid orangered;
+
+}
+.table1 td{
+    vertical-align: 0%
+    
+}
+.table2 td{
+    vertical-align: 0%;
+    
+}
+.table3 td{
+    vertical-align: bottom;
+    
+
+}
+.table4 td{
+    vertical-align: bottom;
+
+}
+.eatenTable td{
+    vertical-align: middle;
+}
+

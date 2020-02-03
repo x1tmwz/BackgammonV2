@@ -1,8 +1,6 @@
 
 class doubleDice{
     constructor() {
-        this.dice1 = 1;
-        this.dice2 = 1;
         this.createComponent();
     }
     throwDice() {
@@ -20,6 +18,9 @@ class doubleDice{
             this.render();
         },className:"throwButton"},"throw Dice");
         this.domComponent = createDom("div",{className:"doubleDiceCompnent"},this.domDice1,"  ",this.domDice2,"  ",this.domButton);
+    }
+    makeButtonDisabled(){
+        this.domButton.disabled = !this.domButton.disabled;
     }
 
     render() {
