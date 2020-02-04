@@ -5,49 +5,48 @@ class Backgammon {
         this.eatenSoliders = [];
         this.whiteTurn = true;
         this.createComponent();
-       
+        this.setDragId =this.setDragId.bind(this);
+        this.getDiceScore();
     }
-    
     getDiceScore(){
-        this.diceThrowScroe = this.doubleDiceDom.getDice();
-        if(diceNumbsers){
-            if (diceNumbsers[0] === diceNumbsers[1]) {
-                this.diceThrowScroe = [diceNumbsers[0], diceNumbsers[0], diceNumbsers[0], diceNumbsers[0]];
+        let diceNumbser = this.doubleDiceDom.getDice();
+        if(diceNumbser[0]){
+            if (diceNumbser[0] === diceNumbser[1]) {
+                if(!this.diceThrowScroe)this.diceThrowScroe = [diceNumbser[0], diceNumbser[0], diceNumbser[0], diceNumbser[0]];
             }
             else {
-                this.diceThrowScroe = [diceNumbsers[0], diceNumbsers[1]];
+                if(!this.diceThrowScroe)this.diceThrowScroe = [diceNumbser[0], diceNumbser[1]];
             }
         }
-       
     }
     removeDiceScroe(from, to) {
         let dice = Math.abs(to - from.x);
         let index = this.diceThrowScroe.indexOf(dice);
-        this.diceThrowScroe = this.diceThrowScroe.slice(0, index).concat(index);
+        this.diceThrowScroe = this.diceThrowScroe.slice(0,index).concat(this.diceThrowScroe.slice(index+1));
+        
     }
     render() {
         for (let i = 0; i < this.tdArray.length; i++) {
-            if (this.tdArray[i].childNodes.length !== 0) {
-                for (let j = 0; j < this.tdArray[i].childNodes.length; j++) {
-                    this.tdArray[i].removeChild(this.tdArray.childNodes[j]);
-                }
+            while(this.tdArray[i].hasChildNodes()){
+                this.tdArray[i].removeChild(this.tdArray[i].firstChild);
             }
         }
         for (let i = 0; i < this.locationsOfDiscs.length; i++) {
-            if (this.locationsOfDiscs[i].length !== 0) {
-                for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
-                    this.tdArray[i].appendChild(this.locationsOfDiscs[i][j].domComponent)
-                }
+            for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
+                this.tdArray[i].appendChild(this.locationsOfDiscs[i][j].domComponent)
             }
-            for (let i = 0; i < this.eatTableDom.length; i++) {
-                this.eatTableDom[i].removeChild(this.eatTableDom.childNodes[j]);
+        }
+        if(this.eatenSoliders.length > 0){
+           
+            while(this.eatTdDom.hasChildNodes()){
+                this.eatTdDom.removeChild(this.eatTdDom.firstChild)
             }
-            for (let i = 0; this.eatenSoliders.length; i++) {
-                this.eatTableDom[i].appendChild(this.eatenSoliders[i].domComponent);
+            
+            for (let i = 0; i<this.eatenSoliders.length; i++) {
+                this.eatTdDom.appendChild(this.eatenSoliders[i].domComponent);
 
             }
         }
-
     }
     changeTurn() {
         this.whiteTurn = !this.whiteTurn;
@@ -61,8 +60,8 @@ class Backgammon {
             }
             return table;
         }
-        let eatenTable = createTable1D(1, "eatenTable");
-        this.eatTableDom = Array.from(eatenTable.getElementsByTagName("td"));
+        let eatenTable = createTable1D(1,"eatenTable");
+        this.eatTdDom = Array.from(eatenTable.getElementsByTagName("td"));
         let table1 = createTable1D(6, "table1");
         let table2 = createTable1D(6, "table2");
         let table3 = createTable1D(6, "table3");
@@ -73,10 +72,8 @@ class Backgammon {
         let tdOftable4 = Array.from(table4.getElementsByTagName("td"));
         this.tdArray = tdOftable2.concat(tdOftable1, tdOftable3.reverse(), tdOftable4.reverse());
         for (let i = 0; i < this.locationsOfDiscs.length; i++) {
+            this.tdArray[i].id = i;
             if (this.locationsOfDiscs[i].length !== 0) {
-                this.tdArray[i].addEventListener("dragend",this.playWhenDrop);
-                this.tdArray[i].addEventListener("dragover",(ev)=>{ev.preventDefault()});
-                this.tdArray[i].id = i;
                 for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
                     this.tdArray[i].appendChild(this.locationsOfDiscs[i][j].domComponent)
                 }
@@ -84,6 +81,7 @@ class Backgammon {
         }
         let boardImgDom = createDom("img", { className: "boardImg", src: "../resources/Borad_img/board.png" });
         this.domComponent = createDom("div", { className: "backgammon" }, this.doubleDiceDom.domComponent, boardImgDom, eatenTable, table1, table2, table3, table4);
+        
     }
     createMapOfDiscsOnBoard() {
         this.locationsOfDiscs = [];
@@ -109,18 +107,16 @@ class Backgammon {
         }
     }
     findDiscLocation(id) {
-        for (let i = 0; i < this.locationsOfDiscs; i++) {
+        for (let i = 0; i < this.locationsOfDiscs.length; i++) {
             if (this.locationsOfDiscs[i].length !== 0) {
                 for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
-                    if (this.locationsOfDiscs[i][j].id === id) {
+                    if (this.locationsOfDiscs[i][j].id == id) {
                         return { x: i, y: j };
                     }
                 }
             }
         }
         return null;
-
-
     }
     checkIfAnySoliderOfMineCanMoveBaseOnMyDiceNumber() {
         let color = "W";
@@ -128,10 +124,9 @@ class Backgammon {
             color = "R";
         }
         for (let i = 0; i < this.locationsOfDiscs.length; i++) {
-            if (this.locationsOfDiscs[i] !== 0) {
-                if (this.locationsOfDiscs[i][0].color === color) {
+            if (this.locationsOfDiscs[i].length !== 0) {
+                if ((this.locationsOfDiscs[i][0]).color === color) {
                     for (let j = 0; j < this.locationsOfDiscs.length; j++) {
-
                         let validObj = this.checkValidMove({ x: i, y: 0 }, j, this.diceThrowScroe)
                         if (!(validObj.valid)) {
                             return true;
@@ -146,15 +141,24 @@ class Backgammon {
         return false;
     }
     checkValidMove(from, to, dices) {
+        if(this.whiteTurn){
+            if(this.locationsOfDiscs[from.x][from.y].color == "R"){
+               
+                return new ErrorObj(true,"you take disc with wrong color");
+            }
+        }
+        else{
+            if(this.locationsOfDiscs[from.x][from.y].color == "W") return new ErrorObj(true,"you take disc with wrong color");
+        }
         let absoluteDelta = Math.abs(to - from.x);
         if (absoluteDelta === 0) return new ErrorObj(true, "you need to move the disc from is row");
-        let diceNumberMatchToMoveLength = false;
+        let diceNumberMatchToDelta = false;
         for (let dice of dices) {
             if (absoluteDelta === dice) {
                 diceNumberMatchToDelta = true;
             }
         }
-        if (diceNumberMatchToMoveLength) {
+        if (diceNumberMatchToDelta) {
             let disc = this.locationsOfDiscs[from.x][from.y];
             let toRow = this.locationsOfDiscs[to];
             let delta = to - from.x;
@@ -188,16 +192,15 @@ class Backgammon {
             let validObj = this.checkValidMove(from, to, dices);
             if (!validObj.error) {
                 let disc = this.locationsOfDiscs[from.x][from.y];
-
                 if (this.locationsOfDiscs[to].length !== 1) {
                     this.locationsOfDiscs[to].push(disc);
-                    this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(1);
+                    this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(0,from.y).concat(this.locationsOfDiscs[from.x].slice(from.y+1));
                 }
                 else if (this.locationsOfDiscs[to].length === 1) {
                     this.eatenSoliders.push(this.locationsOfDiscs[to][0]);
                     this.locationsOfDiscs[to] = [];
                     this.locationsOfDiscs[to].push(disc);
-                    this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(1);
+                    this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(0,from.y).concat(this.locationsOfDiscs[from.x].slice(from.y+1));
                 }
                 this.removeDiceScroe(from, to);
                 this.render();
@@ -223,7 +226,7 @@ class Backgammon {
         if (!this.whiteTurn) {
             color = "R";
         }
-        for (let index = 0; i < this.eatenSoliders; index++) {
+        for (let index = 0; index < this.eatenSoliders; index++) {
             if (this.eatenSoliders[index].color === color) {
                 return true;
             }
@@ -270,7 +273,7 @@ class Backgammon {
         if (!validObj.error) {
             let disc = this.eatenSoliders[discIndex];
             this.locationsOfDiscs[to].push(disc);
-            this.eatenSoliders = this.eatenSoliders.slice(0, discIndex).concat(discIndex);
+            this.eatenSoliders = this.eatenSoliders.slice(0, discIndex).concat(discIndex+1);
             this.render();
         }
         else {
@@ -311,7 +314,7 @@ class Backgammon {
     checkIfThereIsWinner() {
         let isThereAnyWhiteSolider = false;
         let isThereAnyRedSolider = false;
-        for (let i = 0; i < this.locationsOfDiscs; i++) {
+        for (let i = 0; i < this.locationsOfDiscs.length; i++) {
             if (this.locationsOfDiscs[i].length !== 0) {
                 for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
                     let disc = this.locationsOfDiscs[i][j];
@@ -328,12 +331,13 @@ class Backgammon {
 
 
     }
-    playWhenDrop(ev){
+    setDragId(ev){
+        this.dragId = ev.target.id;
+    }
+    playWhenDropDone(ev){
         ev.preventDefault();
-        console.log("onDrop");
-        let to = event.target.id;
-       /* let obj = this.checkIfThereIsWinner();
-        let {isThereAnyRedSolider,isThereAnyWhiteSolider}= obj;
+        let to = ev.target.id;
+        let {isThereAnyRedSolider,isThereAnyWhiteSolider} = this.checkIfThereIsWinner();
         if(!isThereAnyRedSolider){
             alert("the winner is Red");
             return;
@@ -341,33 +345,49 @@ class Backgammon {
         if(!isThereAnyWhiteSolider){
             alert("the winner is White");
             return;
-        }*/
-        
-        console.log(to);
+        }
+        this.getDiceScore();
         if(!this.diceThrowScroe || this.diceThrowScroe.length == 0){
             alert("please throw the dice to start");
         }
         else{
-            this.doubleDiceDom.makeButtonDisabled();
             if(!this.checkIfAnySoliderOfMineCanMoveBaseOnMyDiceNumber()){
+                console.log("cant do anything");
                 this.diceThrowScroe = null;
+                this.doubleDiceDom.resetDice();
                 this.doubleDiceDom.makeButtonDisabled();
                 this.changeTurn();
                 return;
             }
             if(this.checkIfThereIsEatenSolidersOfMyColor()){
+                console.log("eatensolider found");
                 let index = this.findEatenDisc(id);
                 this.bringBackEatenSolider(index,to,this.diceThrowScroe);
                 return;
             }
-            let from = this.findDiscLocation(id);
+            let from = this.findDiscLocation(this.dragId);
             this.makeMove(from,to,this.diceThrowScroe);
+            console.log(this.diceThrowScroe);
+            if(this.diceThrowScroe.length == 0){
+                this.diceThrowScroe = null;
+                this.doubleDiceDom.resetDice();
+                this.doubleDiceDom.makeButtonDisabled();
+                this.changeTurn();
+            }
         }
         return;
-
-
 
     }
 }
 let t = new Backgammon();
+let alldiscs = t.domComponent.querySelectorAll(".Disc");
+let allcells = t.domComponent.querySelectorAll("td");
+
+for(let i = 0;i<alldiscs.length;i++){
+    alldiscs[i].addEventListener("drag",t.setDragId.bind(t));
+}
+for(let i = 0;i<allcells.length;i++){
+    allcells[i].addEventListener("drop",t.playWhenDropDone.bind(t));
+    allcells[i].addEventListener("dragover",(ev)=>{ev.preventDefault();})
+}
 document.body.appendChild(t.domComponent);

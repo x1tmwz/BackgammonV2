@@ -4,12 +4,18 @@ class doubleDice{
         this.createComponent();
     }
     throwDice() {
-        this.dice1 = Math.floor(Math.random() * 6);
-        this.dice2 = Math.floor(Math.random() * 6);
+        this.dice1 = Math.ceil(Math.random() * 6);
+        this.dice2 = Math.ceil(Math.random() * 6);
+        this.makeButtonDisabled();
+    }
+    resetDice(){
+        this.dice1= null;
+        this.dice2 = null;
     }
     getDice(){
         return [this.dice1,this.dice2];
     }
+    
     createComponent(){
         this.domDice1 = createDom("img",{className:"dice",src:"../resources/Dice_img/dice1.png"});
         this.domDice2 = createDom("img",{className:"dice",src:"../resources/Dice_img/dice1.png"});
@@ -33,8 +39,8 @@ class doubleDice{
 
         
         
-        this.domDice1.setAttribute("src",imges[this.dice1]);
-        this.domDice2.setAttribute("src",imges[this.dice2]);
+        this.domDice1.setAttribute("src",imges[this.dice1-1]);
+        this.domDice2.setAttribute("src",imges[this.dice2-1]);
     }
 }
 
