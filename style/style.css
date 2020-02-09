@@ -1,5 +1,5 @@
 .dice{
-    height: 10%;
+    height: 12%;
     width: 7%;
 }
 .throwButton{
@@ -27,89 +27,98 @@
     margin-right: auto;
     display: block;
     width: 80%;
-    height: 80%;
+    height: 98%;
+    border: 1px solid black;
 }
 .boardImg{
-    height: 100%;
+    height: 86.5%;
     width: 100%;
+    
 
 }
 table{
-    height: 33%;
+    height: 35%;
     width: 30%;
 }
 tr{
     border: 1px solid black;
+
 }
 td{
     border: 1px solid black;
-    width:50px;
-    min-width:10px;
+    width:10%;
+    min-width:5%;
+    height: 20%;
+    min-height: 10%;
     padding-left: 4%;
     
 }
 .table1{
-    top: 16%;
+    top: 21%;
     position: absolute;
     left: 52%;
     z-index: 2;
     border: 1px solid red;
-    
-    
 }
 .table2{
     position: absolute;
-    top:16%;
+    top:21%;
     left: 18%;
     z-index: 2;
     border: 1px solid blueviolet;
-    
-    
 }
 .table3{
     position: absolute;
-    top:49%;
+    top:56%;
     left: 52%;
     z-index: 2;
     border: 1px solid green;
-    
 }
 .table4{
     position: absolute;
-    top: 49%;
+    top: 56%;
     left: 18%;
     z-index: 2;
     border: 1px solid blue;
-    
 }
 .eatenTable{
     width: 4%;
-    height: 78%;
+    height: 82%;
     position: absolute;
-    top: 10%;
+    top: 15%;
     left: 48%;
     z-index: 2;
     border: 1px solid orangered;
-
 }
 .table1 td{
     vertical-align: 0%
-    
 }
 .table2 td{
     vertical-align: 0%;
-    
 }
 .table3 td{
     vertical-align: bottom;
-    
-
 }
 .table4 td{
     vertical-align: bottom;
-
 }
 .eatenTable td{
     vertical-align: middle;
+}
+.turnViewComponent{
+    height: 8%;
+    width: 20%;
+    left: 70%;
+    top: 6%;
+    position: absolute;
+    z-index: 7;
+}
+.turnViewImg{
+    height: 100%;
+    width: 23%;
+    position: flex;
+    top: 0%;
+    left: 60%;
+    z-index: 7;
 }
 
