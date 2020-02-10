@@ -15,7 +15,6 @@ class doubleDice{
     getDice(){
         return [this.dice1,this.dice2];
     }
-    
     createComponent(){
         this.domDice1 = createDom("img",{className:"dice",src:"../resources/Dice_img/dice1.png"});
         this.domDice2 = createDom("img",{className:"dice",src:"../resources/Dice_img/dice1.png"});
@@ -28,7 +27,6 @@ class doubleDice{
     makeButtonDisabled(){
         this.domButton.disabled = !this.domButton.disabled;
     }
-
     render() {
         const imges = ["../resources/Dice_img/dice1.png",
         "../resources/Dice_img/dice2.png",
@@ -36,9 +34,6 @@ class doubleDice{
           "../resources/Dice_img/dice4.png",
            "../resources/Dice_img/dice5.png",
             "../resources/Dice_img/dice6.png"];
-
-        
-        
         this.domDice1.setAttribute("src",imges[this.dice1-1]);
         this.domDice2.setAttribute("src",imges[this.dice2-1]);
     }
