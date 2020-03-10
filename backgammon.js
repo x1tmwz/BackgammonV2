@@ -1,100 +1,37 @@
 
 class Backgammon {
     constructor() {
-        this.DiceDom = new doubleDice();
         this.createDiscLocationsArray();
         this.eatenSoliders = [];
         this.whiteTurn = true;
-        this.createComponent();
-        this.getMovesCount();
+        // this.getMovesCount();
         this.playedDiscsIdArray = [];
         this.redDiscAmount = 15;
         this.whiteDiscAmount = 15;
-        this.setGameFunctionality();
-        
+       
     }
-    getMovesCount() {
-        let dice = this.DiceDom.getDice();
-        if (dice[0]) {
-            if (dice[0] === dice[1]) {
-                if (!this.diceResult) this.diceResult = [dice[0], dice[0], dice[0], dice[0]];
-            }
-            else {
-                if (!this.diceResult) this.diceResult = [dice[0], dice[1]];
-            }
-        }
-    }
+    // getMovesCount() {
+    //     let dice = this.DiceDom.getDice();
+    //     if (dice[0]) {
+    //         if (dice[0] === dice[1]) {
+    //             if (!this.diceResult) this.diceResult = [dice[0], dice[0], dice[0], dice[0]];
+    //         }
+    //         else {
+    //             if (!this.diceResult) this.diceResult = [dice[0], dice[1]];
+    //         }
+    //     }
+    // }
     removeDiceResult(from, to) {
         let dice = Math.abs(to - from);
         let index = this.diceResult.indexOf(dice);
         this.diceResult = this.diceResult.slice(0, index).concat(this.diceResult.slice(index + 1));
 
     }
-    render() {
-        for (let i = 0; i < this.tdArray.length; i++) {
-            while (this.tdArray[i].hasChildNodes()) {
-                this.tdArray[i].removeChild(this.tdArray[i].firstChild);
-            }
-        }
-        for (let i = 0; i < this.locationsOfDiscs.length; i++) {
-            for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
-                if(j == 6)break;
-                this.tdArray[i].appendChild(this.locationsOfDiscs[i][j].domComponent);
-            }
-        }
-        if (this.eatenSoliders.length > 0) {
-
-            while (this.eatTdDom[0].hasChildNodes()) {
-                this.eatTdDom[0].removeChild(this.eatTdDom[0].firstChild)
-            }
-            for (let i = 0; i < this.eatenSoliders.length; i++) {
-                this.eatTdDom[0].appendChild(this.eatenSoliders[i].domComponent);
-
-            }
-        }
-    }
     changeTurn() {
         this.whiteTurn = !this.whiteTurn;
         this.renderChangeTurn();
     }
-    renderChangeTurn() {
-        const imges = ["../resources/Disc.img/redDisc.png", "../resources/Disc.img/whiteDisc.png"]
-        this.whosTurnNowImgNode.setAttribute("src", this.whiteTurn ? imges[1] : imges[0]);
-    }
-    createComponent() {
-        function createTable1D(size, className) {
-            let table = createDom("table", { className });
-            let row = table.insertRow(0);
-            for (let i = 0; i < size; i++) {
-                let cell = row.insertCell(i);
-            }
-            return table;
-        }
-        this.whosTurnNowImgNode = createDom("img", { className: "turnViewImg", src: "../resources/Disc.img/whiteDisc.png" });
-        this.whosTurnNowComponent = createDom("div", { className: "turnViewComponent" }, "Current turn:", this.whosTurnNowImgNode);
-        let eatenTable = createTable1D(1, "eatenTable");
-        this.eatTdDom = Array.from(eatenTable.getElementsByTagName("td"));
-        let table1 = createTable1D(6, "table1");
-        let table2 = createTable1D(6, "table2");
-        let table3 = createTable1D(6, "table3");
-        let table4 = createTable1D(6, "table4");
-        let tdOftable1 = Array.from(table1.getElementsByTagName("td"));
-        let tdOftable2 = Array.from(table2.getElementsByTagName("td"));
-        let tdOftable3 = Array.from(table3.getElementsByTagName("td"));
-        let tdOftable4 = Array.from(table4.getElementsByTagName("td"));
-        this.tdArray = tdOftable2.concat(tdOftable1, tdOftable3.reverse(), tdOftable4.reverse());
-        for (let i = 0; i < this.locationsOfDiscs.length; i++) {
-            this.tdArray[i].id = i;
-            if (this.locationsOfDiscs[i].length !== 0) {
-                for (let j = 0; j < this.locationsOfDiscs[i].length; j++) {
-                    this.tdArray[i].appendChild(this.locationsOfDiscs[i][j].domComponent)
-                }
-            }
-        }
-        this.boardImgDom = createDom("img", { className: "boardImg", src: "../resources/Borad_img/board.png" });
-        this.headLineNode = createDom("h1",{className:"headline"},"Backgammon!!");
-        this.domComponent = createDom("div", { className: "backgammon" }, this.DiceDom.domComponent, this.whosTurnNowComponent,this.headLineNode ,this.boardImgDom,eatenTable, table1, table2, table3, table4);
-    }
+
     createDiscLocationsArray() {
         this.locationsOfDiscs = [];
         for (let i = 0; i < 24; i++) {
@@ -162,13 +99,13 @@ class Backgammon {
         let oppositeColor;
         if (this.whiteTurn) {
             from = 23;
-            locationBaseOnDice = dice.map(dice => from - (dice-1))
+            locationBaseOnDice = dice.map(dice => from - (dice - 1))
             myColor = "W"
             oppositeColor = "R"
         }
         else {
             from = 0;
-            locationBaseOnDice = dice.map(dice => from + (dice -1))
+            locationBaseOnDice = dice.map(dice => from + (dice - 1))
             myColor = "R"
             oppositeColor = "W"
         }
@@ -400,30 +337,30 @@ class Backgammon {
         }
         return thereIsAMatch;
     }
-    bearingOff(ev) {
-        ev.preventDefault();
-        if (this.checkIfDropOutSideOfBoardImg(ev)) {
-            if (this.checkBearingoff() && !this.checkIfThereIsEatenSolidersOfMyColor()) {
-                this.getMovesCount();
-                if (!this.diceResult || this.diceResult.length == 0) {
-                    alert("please throw the dice to start");
-                }
-                else {
-                    const from = this.findDiscLocation(this.dragId);
-                    if (this.validBearingOff(from, this.diceResult)) {
-                        console.log("enter");
-                        this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(1);
-                        this.render();
-                        if (this.diceResult.length == 0) {
-                            this.turnDone();
-                        }
-                        if (this.checkIfThereIsWinner()) return;
-                        return;
-                    }
-                }
-            }
-        }
-    }
+    // bearingOff(ev) {
+    //     ev.preventDefault();
+    //     if (this.checkIfDropOutSideOfBoardImg(ev)) {
+    //         if (this.checkBearingoff() && !this.checkIfThereIsEatenSolidersOfMyColor()) {
+    //             this.getMovesCount();
+    //             if (!this.diceResult || this.diceResult.length == 0) {
+    //                 alert("please throw the dice to start");
+    //             }
+    //             else {
+    //                 const from = this.findDiscLocation(this.dragId);
+    //                 if (this.validBearingOff(from, this.diceResult)) {
+    //                     console.log("enter");
+    //                     this.locationsOfDiscs[from.x] = this.locationsOfDiscs[from.x].slice(1);
+    //                     this.render();
+    //                     if (this.diceResult.length == 0) {
+    //                         this.turnDone();
+    //                     }
+    //                     if (this.checkIfThereIsWinner()) return;
+    //                     return;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
     checkIfDropOutSideOfBoardImg(e) {
         let x = e.x;
         let y = e.y;
@@ -465,72 +402,72 @@ class Backgammon {
         }
         return winner;
     }
-    setDragId(ev) {
-        this.dragId = ev.target.id;
-    }
-    turnDone() {
-        this.diceResult = null;
-        this.playedDiscsIdArray = [];
-        this.DiceDom.resetDice();
-        this.DiceDom.makeButtonDisabled();
-        this.changeTurn();
+    // setDragId(ev) {
+    //     this.dragId = ev.target.id;
+    // }
+    // turnDone() {
+    //     this.diceResult = null;
+    //     this.playedDiscsIdArray = [];
+    //     this.DiceDom.resetDice();
+    //     this.DiceDom.makeButtonDisabled();
+    //     this.changeTurn();
 
-    }
-    play(ev) {
-        ev.preventDefault();
-        let to = ev.target.id;
-        if (this.checkIfThereIsWinner()) return;
-        this.getMovesCount();
-        if (!this.diceResult || this.diceResult.length == 0) {
-            alert("please throw the dice to start");
-        }
-        else {
-            if (this.checkIfThereIsEatenSolidersOfMyColor()) {
-                if (!this.checkIfIcanBringDiscBaseOnDiceResult(this.diceResult)) {
-                    alert("you cant bring back your disc")
-                    this.turnDone();
-                    return;
-                }
-                const index = this.findEatenDisc(this.dragId);
-                if (index === undefined) {
-                    alert("you need to bring back your eaten solider before you do move");
-                    return;
-                }
-                this.bringBackEatenSolider(index, to, this.diceResult);
-                if (this.diceResult.length == 0) {
-                    this.turnDone();
-                }
-                return;
-            }
-            if (!this.checkIfAnySoliderOfMineCanMoveBaseOnMyDiceNumber()) {
-                alert("sorry yo cant move at all switching turn")
-                this.turnDone();
-                return;
-            }
-            const from = this.findDiscLocation(this.dragId);
-            if (from === undefined) {
-                alert("you didnt take the right disc");
-                return;
-            }
-            this.makeMove(from, to, this.diceResult);
-            if (this.diceResult.length == 0) {
-                this.turnDone();
-            }
-        }
-        return;
-    }
-    setGameFunctionality() {
-        let allDiscComponents = this.domComponent.querySelectorAll(".Disc");
-        let allCellComponents = this.domComponent.querySelectorAll("td");
-        for (let i = 0; i < allDiscComponents.length; i++) {
-            allDiscComponents[i].addEventListener("drag", this.setDragId.bind(this));
-        }
-        for (let i = 0; i < allCellComponents.length; i++) {
-            allCellComponents[i].addEventListener("drop", this.play.bind(this));
-            allCellComponents[i].addEventListener("dragover", (ev) => { ev.preventDefault(); })
-        }
-        document.body.addEventListener("drop",this.bearingOff.bind(this));
-        document.body.addEventListener("dragover", (ev) => { ev.preventDefault(); });
-    }
+    // }
+    // play(ev) {
+    //     ev.preventDefault();
+    //     let to = ev.target.id;
+    //     if (this.checkIfThereIsWinner()) return;
+    //     this.getMovesCount();
+    //     if (!this.diceResult || this.diceResult.length == 0) {
+    //         alert("please throw the dice to start");
+    //     }
+    //     else {
+    //         if (this.checkIfThereIsEatenSolidersOfMyColor()) {
+    //             if (!this.checkIfIcanBringDiscBaseOnDiceResult(this.diceResult)) {
+    //                 alert("you cant bring back your disc")
+    //                 this.turnDone();
+    //                 return;
+    //             }
+    //             const index = this.findEatenDisc(this.dragId);
+    //             if (index === undefined) {
+    //                 alert("you need to bring back your eaten solider before you do move");
+    //                 return;
+    //             }
+    //             this.bringBackEatenSolider(index, to, this.diceResult);
+    //             if (this.diceResult.length == 0) {
+    //                 this.turnDone();
+    //             }
+    //             return;
+    //         }
+    //         if (!this.checkIfAnySoliderOfMineCanMoveBaseOnMyDiceNumber()) {
+    //             alert("sorry yo cant move at all switching turn")
+    //             this.turnDone();
+    //             return;
+    //         }
+    //         const from = this.findDiscLocation(this.dragId);
+    //         if (from === undefined) {
+    //             alert("you didnt take the right disc");
+    //             return;
+    //         }
+    //         this.makeMove(from, to, this.diceResult);
+    //         if (this.diceResult.length == 0) {
+    //             this.turnDone();
+    //         }
+    //     }
+    //     return;
+    // }
+    // setGameFunctionality() {
+    //     let allDiscComponents = this.domComponent.querySelectorAll(".Disc");
+    //     let allCellComponents = this.domComponent.querySelectorAll("td");
+    //     for (let i = 0; i < allDiscComponents.length; i++) {
+    //         allDiscComponents[i].addEventListener("drag", this.setDragId.bind(this));
+    //     }
+    //     for (let i = 0; i < allCellComponents.length; i++) {
+    //         allCellComponents[i].addEventListener("drop", this.play.bind(this));
+    //         allCellComponents[i].addEventListener("dragover", (ev) => { ev.preventDefault(); })
+    //     }
+    //     document.body.addEventListener("drop", this.bearingOff.bind(this));
+    //     document.body.addEventListener("dragover", (ev) => { ev.preventDefault(); });
+    // }
 }
 

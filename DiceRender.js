@@ -3,7 +3,7 @@ class DiceRender {
     constructor() {
         this.createComponent();
     }
-    setState(state) {
+    syncState(state) {
         this.dice = state;
         this.render();
     }

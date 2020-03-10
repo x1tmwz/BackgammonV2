@@ -2,7 +2,9 @@ class BackgammonState {
     constructor(){
         this.state={
             dice:[],
-            discLoactionsArray:[]
+            locationsOfDiscs:[],
+            whiteTure:true,
+            eatenDiscs:[]
         }
     }
     dispatch(action){
