@@ -14,8 +14,15 @@ class Disc{
     }
     createComponent(){
         const imges=["../resources/Disc.img/redDisc.png","../resources/Disc.img/whiteDisc.png"]
-        this.domComponent = createDom("img",{src:this.color=="R"?imges[0]:imges[1]
-        ,className:"Disc",id:this.id,draggable:"true"});
+        this.domComponent = createDom("img",{
+            src:this.color=="R"?imges[0]:imges[1],
+            className:"Disc",
+            id:this.id,
+            draggable:"true",
+            ondrag:(e)=>{
+                return this.id;
+            }
+        });
     }
 }
 

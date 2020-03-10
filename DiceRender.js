@@ -8,14 +8,14 @@ class DiceRender {
         this.render();
     }
     createComponent() {
-        this.dieDom1 = createDom("img", { className: "dice", src: "../resources/Dice_img/dice1.png" });
-        this.dieDom2 = createDom("img", { className: "dice", src: "../resources/Dice_img/dice1.png" });
+        this.dieDom1 = createDom("img", { className: "doubleDice__die", src: "../resources/Dice_img/dice1.png" });
+        this.dieDom2 = createDom("img", { className: "doubleDice__die", src: "../resources/Dice_img/dice1.png" });
         this.domButton = createDom("button", {
             onclick: () => {
                 this.throwDiceButtonHandler();
-            }, className: "throwButton"
+            }, className: "doubleDice__throwButton"
         }, "throw Dice");
-        this.domComponent = createDom("div", { className: "doubleDiceCompnent" }, this.dieDom1, this.dieDom2, this.domButton);
+        this.domComponent = createDom("div", { className: "doubleDice" }, this.dieDom1, this.dieDom2, this.domButton);
     }
     makeButtonDisabled() {
         this.domButton.disabled = !this.domButton.disabled;
