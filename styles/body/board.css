@@ -1,0 +1,38 @@
+.board{
+    width: 69.5%;
+    height: 99%;
+    border: 3px yellow solid;
+    position: relative;
+    left: 15%;
+}
+.board__upperPart{
+    border: 1px solid blue;
+    width: 56.5%;
+    height: 43%;
+  
+}
+.board__downPart{
+    border: 1px solid black;
+    width: 56.5%;
+    height: 43%;
+   
+}
+.row__upper{
+   
+   
+}
+.row__Down{
+  
+
+   
+}
+.column__upper{
+ 
+   
+
+}
+
+.column__Down{
+  
+   
+}

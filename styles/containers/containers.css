@@ -1,0 +1,19 @@
+.backgammon {
+    width: 100%;
+    height: 100%;
+    background: url('../../resources/gameBackground/background.jpg');
+    font-family: 'Bungee Inline';
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.backgammon__body {
+    background: url('../../resources/Borad_img/board.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: 0;
+    background-size: 70% 100%;
+    width: 100%;
+    height:80%;
+    border: 3px solid red;
+}

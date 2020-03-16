@@ -1,6 +1,6 @@
 class BackgammonRender {
     constructor({ locationsOfDiscs, whiteTurn, eatenDiscs, dice }) {
-        this.state={
+        this.state = {
             locationsOfDiscs,
             whiteTurn,
             eatenDiscs,
@@ -17,21 +17,39 @@ class BackgammonRender {
             }
             return table;
         }
+        function createRowDiv(size, rowClassName,coulmnClassName) {
+            let rowDiv = createDom("div", { className:rowClassName });
+            for (let i = 0; i < size; i++) {
+                let row = createDom("div", { className:coulmnClassName });
+                rowDiv.appendChild(row);
+            }
+            return rowDiv;
+        }
         //header
         this.whosTurnNowImgNode = createDom("img", { className: "turnViewImg", src: "../resources/Disc.img/whiteDisc.png" });
         this.whosTurnNowComponent = createDom("div", { className: "header__turnComponent" }, "Current turn:", this.whosTurnNowImgNode);
         this.dice = new DiceRender();
-        const title = createDom("h1", { className: "header__title" }, "Backgammon!!");
+        const title = createDom("h1", { className: "header__title" }, "B a c k g a m m o n");
         this.titleDom = createDom("div", { className: "header__title__block" }, title);
-        const HeaderBody = createDom("div", { className: "header__body" },this.dice.domComponent,this.whosTurnNowComponent);
+        const HeaderBody = createDom("div", { className: "header__body" }, this.dice.domComponent, this.whosTurnNowComponent);
         const Header = createDom("div", { className: "header" },
-         title,
-         HeaderBody
-         );
-        const Body = createDom("div", { className: "backgammon__body" })
-  
+            title,
+            HeaderBody
+        );
 
-        this.domComponent = createDom("div", { className: "backgammon" },Header,Body);
+        //body
+        const upperRowLeft =createRowDiv(6,"row__upper","column__upper");
+        const upperRowRight =createRowDiv(6,"row__upper","column__upper");
+        const downRowLeft =createRowDiv(6,"row__Down","column__Down"); ;
+        const downRowRight=createRowDiv(6,"row__Down","column__Down");
+        const boardUpperPart = createDom('div',{className:'board__upperPart'},upperRowLeft,upperRowRight);
+        const boardDownPart = createDom('div',{className:'board__downPart'},downRowLeft,downRowRight);
+        const board =createDom('div',{className:'board'},boardUpperPart,boardDownPart);
+        const Body = createDom("div", { className: "backgammon__body" },board);
+
+
+        this.domComponent = createDom("div", { className: "backgammon" }, Header, Body);
+        
 
 
         // const eatenTable = createTable1D(1, "eatenTable");
@@ -53,33 +71,33 @@ class BackgammonRender {
         //         }
         //     }
         // }
-        
-        
-        
+
+
+
         // this.domComponent = createDom("div", { className: "backgammon" }, this.dice.domComponent, this.whosTurnNowComponent, this.headLineNode, this.boardImgDom, eatenTable, table1, table2, table3, table4);
     }
     renderChangeTurn() {
         const imges = ["../resources/Disc.img/redDisc.png", "../resources/Disc.img/whiteDisc.png"]
-        this.whosTurnNowImgNode.setAttribute("src", this.state.whiteTurn ?  imges[0] : imges[1]);
+        this.whosTurnNowImgNode.setAttribute("src", this.state.whiteTurn ? imges[0] : imges[1]);
     }
-    renderDice(){
+    renderDice() {
         this.dice.syncState(this.state.dice);
     }
-    renderRowsWithDiscs(){
-        const shouldItRender=(oldState,newState)=>{
-            if(!oldState)return false;
-            for(let i=0; i<oldState.locationsOfDiscs.length;i++){
-                for(let j=0;j<oldState.locationsOfDiscs[i].length;j++){
+    renderRowsWithDiscs() {
+        const shouldItRender = (oldState, newState) => {
+            if (!oldState) return false;
+            for (let i = 0; i < oldState.locationsOfDiscs.length; i++) {
+                for (let j = 0; j < oldState.locationsOfDiscs[i].length; j++) {
                     const oldDisc = oldState.locationsOfDiscs[i][j];
                     const newDisc = newState.locationsOfDiscs[i][j];
-                    if(oldDisc.id !== newDisc.id){
+                    if (oldDisc.id !== newDisc.id) {
                         return true;
                     }
                 }
             }
-            return false; 
+            return false;
         }
-        if(shouldItRender(this.oldState,this.state)){
+        if (shouldItRender(this.oldState, this.state)) {
             for (let i = 0; i < this.tdArray.length; i++) {
                 while (this.tdArray[i].hasChildNodes()) {
                     this.tdArray[i].removeChild(this.tdArray[i].firstChild);
@@ -93,7 +111,7 @@ class BackgammonRender {
             }
         }
     }
-    renderEatenDiscs(){
+    renderEatenDiscs() {
         if (this.state.eatenDiscs.length > 0) {
             while (this.eatTdDom[0].hasChildNodes()) {
                 this.eatTdDom[0].removeChild(this.eatTdDom[0].firstChild)
@@ -105,15 +123,15 @@ class BackgammonRender {
         }
 
     }
-    render(){
+    render() {
         this.renderChangeTurn();
         this.renderDice();
         this.renderRowsWithDiscs();
         this.renderEatenDiscs();
     }
-    syncState(state){
-        this.oldState = Object.assign({},this.state);
-        this.state = Object.assign(this.state,state);
+    syncState(state) {
+        this.oldState = Object.assign({}, this.state);
+        this.state = Object.assign(this.state, state);
         this.render();
     }
 }

@@ -1,0 +1,4 @@
+@import './containers/containers.css';
+@import './dice/dice.css';
+@import './header/header.css';
+@import './body/board.css'
