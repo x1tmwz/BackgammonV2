@@ -4,35 +4,56 @@
     border: 3px yellow solid;
     position: relative;
     left: 15%;
+    background: url('../../resources/Borad_img/board.png');
+    background-position: center;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: row;
 }
-.board__upperPart{
-    border: 1px solid blue;
-    width: 56.5%;
-    height: 43%;
-  
+.board__leftPart{
+    border: red 2px solid;
+    width: 38%;
+    height: 84.8%;
+    margin-left: 9%;
+    margin-top:55px;
+    display: flex;
+    flex-direction: column;
 }
-.board__downPart{
-    border: 1px solid black;
-    width: 56.5%;
-    height: 43%;
-   
+.board__rightPart{
+    border: blue 2px solid;
+    width: 38%;
+    height: 84.8%;
+    margin-top:55px;
+    margin-right: 9%;
+    display: flex;
+    flex-direction: column;
+}
+.board__eatenRow{
+    border: solid palevioletred 2px;
+    width: 5.5%;
+    height: 100%;
+
 }
 .row__upper{
-   
-   
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
 }
 .row__Down{
-  
-
-   
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
 }
 .column__upper{
- 
    
+    width: 16.66%;
+    height: 100%;
 
 }
-
 .column__Down{
-  
-   
+    width: 16.66%;
+    height: 100%;
 }
+

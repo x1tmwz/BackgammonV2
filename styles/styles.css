@@ -1,3 +1,4 @@
+@import './base/_base.css';
 @import './containers/containers.css';
 @import './dice/dice.css';
 @import './header/header.css';

@@ -9,6 +9,8 @@ class BackgammonRender {
         this.createComponent();
     }
     createComponent() {
+        //utills funcs
+         
         function createTable1D(size, className) {
             let table = createDom("table", { className });
             let row = table.insertRow(0);
@@ -17,14 +19,19 @@ class BackgammonRender {
             }
             return table;
         }
-        function createRowDiv(size, rowClassName,coulmnClassName) {
-            let rowDiv = createDom("div", { className:rowClassName });
+        function createRowDiv(size, rowClassName, coulmnClassName) {
+            let rowDiv = createDom("div", { className: rowClassName });
             for (let i = 0; i < size; i++) {
-                let row = createDom("div", { className:coulmnClassName });
+                let row = createDom("div", { className: coulmnClassName });
                 rowDiv.appendChild(row);
             }
             return rowDiv;
         }
+        function boardRowToArrayOfColumns(rowUpLeft,rowUpRight,rowDownLeft,rowDownRight){
+            const columnsUpLeft = rowUpLeft.toA
+            
+            
+        } 
         //header
         this.whosTurnNowImgNode = createDom("img", { className: "turnViewImg", src: "../resources/Disc.img/whiteDisc.png" });
         this.whosTurnNowComponent = createDom("div", { className: "header__turnComponent" }, "Current turn:", this.whosTurnNowImgNode);
@@ -38,18 +45,23 @@ class BackgammonRender {
         );
 
         //body
-        const upperRowLeft =createRowDiv(6,"row__upper","column__upper");
-        const upperRowRight =createRowDiv(6,"row__upper","column__upper");
-        const downRowLeft =createRowDiv(6,"row__Down","column__Down"); ;
-        const downRowRight=createRowDiv(6,"row__Down","column__Down");
-        const boardUpperPart = createDom('div',{className:'board__upperPart'},upperRowLeft,upperRowRight);
-        const boardDownPart = createDom('div',{className:'board__downPart'},downRowLeft,downRowRight);
-        const board =createDom('div',{className:'board'},boardUpperPart,boardDownPart);
-        const Body = createDom("div", { className: "backgammon__body" },board);
+        const upperRowLeft = createRowDiv(6, "row__upper", "column__upper");
+        const upperRowRight = createRowDiv(6, "row__upper", "column__upper");
+        const downRowLeft = createRowDiv(6, "row__Down", "column__Down");;
+        const downRowRight = createRowDiv(6, "row__Down", "column__Down");
+        // const boardUpperPart = createDom('div', { className: 'board__upperPart' }, upperRowLeft, upperRowRight);
+        // const boardDownPart = createDom('div',{className:'board__downPart'},downRowLeft,downRowRight);
+        // const board =createDom('div',{className:'board'},boardUpperPart,boardDownPart);
+
+        const eatenRow =createDom('div',{className:'board__eatenRow'});
+        const boardLeftPart = createDom('div', { className: 'board__leftPart' }, upperRowLeft, downRowLeft);
+        const boardRightPart = createDom('div',{className:'board__rightPart'},upperRowRight,downRowRight);
+        const board =createDom('div',{className:'board'},boardLeftPart,eatenRow,boardRightPart);
+        const Body = createDom("div", { className: "backgammon__body" }, board);
 
 
         this.domComponent = createDom("div", { className: "backgammon" }, Header, Body);
-        
+
 
 
         // const eatenTable = createTable1D(1, "eatenTable");
